@@ -1,3 +1,5 @@
+#include <Arduino.h>
+#line 1 "/home/magraina/projects/hiluxLightModule/hiluxLightModule.ino"
 /************************************ 
  * hiluxLightModule v0.2.0
  * Date: 24.09.2022 | 00:06
@@ -78,6 +80,13 @@ boolean fernLicht = false;
 
 Servo shifterServo;
 
+#line 81 "/home/magraina/projects/hiluxLightModule/hiluxLightModule.ino"
+void setup();
+#line 117 "/home/magraina/projects/hiluxLightModule/hiluxLightModule.ino"
+void loop();
+#line 294 "/home/magraina/projects/hiluxLightModule/hiluxLightModule.ino"
+int blink();
+#line 81 "/home/magraina/projects/hiluxLightModule/hiluxLightModule.ino"
 void setup() {
 	// put your setup code here, to run once:
 	/************************************
@@ -303,3 +312,4 @@ int blink() {
   }
 
 }
+

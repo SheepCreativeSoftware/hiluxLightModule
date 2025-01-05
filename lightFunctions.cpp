@@ -18,19 +18,7 @@
 #include <SoftPWM.h>							// https://github.com/bhagman/SoftPWM
 
 
-Blink flasher[3];
-
-bool directlyToOutput(bool lightState) {
-	return lightState;
-}
-
-bool highBeamFlash(bool lightState, bool lightFlashState, uint16_t flashFrequency) {
-	if(lightState) return true;
-	if(lightFlashState) return flasher[0].blink(flashFrequency);
-	// else then reset
-	flasher[0].resetBlink();
-	return false;
-}
+Blink flasher[1];
 
 void setFlasherLight(bool leftFlasherState, bool rightFlasherState, bool hazardState, bool* outLeftLight, bool* outRightLight, uint16_t flashFrequency) {
 	if(hazardState) {
@@ -60,57 +48,7 @@ void setupLightOutput(uint8_t pin, uint16_t fadeOnTime, uint16_t fadeOffTime) {
 	SoftPWMSetFadeTime(pin, fadeOnTime, fadeOffTime); //Set Fade on/off time for output
 }
 
-void setBooleanLight(uint8_t pin, bool state, uint8_t highValue = SOFT_PWM_HIGH) {
+void setBooleanLight(uint8_t pin, bool state, uint8_t highValue) {
 	if(state) SoftPWMSet(pin, highValue);
 	if(!state) SoftPWMSet(pin, SOFT_PWM_LOW);
-}
-
-void setCombinedHeadlightAll(uint8_t pin,
-							uint8_t parkingState,
-							uint8_t lowBeamState,
-							uint8_t highBeamState,
-							uint8_t parkingOutValue,
-							uint8_t lowBeamOutValue,
-							uint8_t highBeamOutValue) {
-	if(highBeamState) {
-		SoftPWMSet(pin, highBeamOutValue);
-	} else if(lowBeamState) {
-		SoftPWMSet(pin, lowBeamOutValue);
-	} else if(parkingState) {
-		SoftPWMSet(pin, parkingOutValue);
-	} else {
-		SoftPWMSet(pin, SOFT_PWM_LOW);
-	}
-}
-void setCombinedHeadlightHighOnly(uint8_t pin,
-							uint8_t lowBeamState,
-							uint8_t highBeamState,
-							uint8_t lowBeamOutValue,
-							uint8_t highBeamOutValue) {
-	if(highBeamState) {
-		SoftPWMSet(pin, highBeamOutValue);
-	} else if(lowBeamState) {
-		SoftPWMSet(pin, lowBeamOutValue);
-	} else {
-		SoftPWMSet(pin, SOFT_PWM_LOW);
-	}
-}
-
-void setCombinedHeadlightParkOnly(uint8_t pin,
-							uint8_t parkingState,
-							uint8_t lowBeamState,
-							uint8_t parkingOutValue,
-							uint8_t lowBeamOutValue) {
-	if(lowBeamState) {
-		SoftPWMSet(pin, lowBeamOutValue);
-	} else if(parkingState) {
-		SoftPWMSet(pin, parkingOutValue);
-	} else {
-		SoftPWMSet(pin, SOFT_PWM_LOW);
-	}
-}
-
-uint8_t starterDimming(bool active, uint8_t defaultDimValue, uint8_t divisor, uint8_t multiplier1) {
-	if(!active) return defaultDimValue;
-	if(active) return defaultDimValue / divisor * multiplier1;
 }

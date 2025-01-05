@@ -91,34 +91,18 @@ uint8_t getChannel2Switch(uint8_t fallbackValue) {
 	return ppmToSwitchStages(interrupt[CHANNEL2].servoValue);
 }
 
-uint8_t getCurrentLayer(uint8_t channelPosition) {
-	bool switchUpPosition = false;
-	bool switchDownPosition = false;
-	if(channelPosition == DIRECTION_UP) bool switchUpPosition = true;
-	if(channelPosition == DIRECTION_DOWN) bool switchDownPosition = true;
-
-	bool switchUpEdge = edgeEval[0].readEdge(switchUpPosition);
-	bool switchDownEdge = edgeEval[1].readEdge(switchDownPosition);
-
-	if(switchUpEdge) channelLayer++;
-	if(switchDownEdge) channelLayer--;
-	if(channelLayer > MAX_LAYER) channelLayer = MAX_LAYER;
-	if(channelLayer < MIN_LAYER) channelLayer = MIN_LAYER;
-	return channelLayer;
-}
-
 EdgeEvaluation edgeEval2[8];
 void mapSwitchToState(uint8_t layer, uint8_t channelValue, bool* stateSwitchUp, bool* stateSwitchDown) {
 	bool switchUpPosition = false;
 	bool switchDownPosition = false;
-	if(channelValue == DIRECTION_UP) bool switchUpPosition = true;
-	if(channelValue == DIRECTION_DOWN) bool switchDownPosition = true;
+	if(channelValue == DIRECTION_UP) switchUpPosition = true;
+	if(channelValue == DIRECTION_DOWN) switchDownPosition = true;
 
 	uint8_t secondLayer = layer + MAX_LAYER;
 	bool switchUpEdge = edgeEval2[layer].readEdge(switchUpPosition);
 	bool switchDownEdge = edgeEval2[secondLayer].readEdge(switchDownPosition);
 
-	if(switchUpEdge) *stateSwitchUp != *stateSwitchUp;
-	if(switchDownEdge) *stateSwitchDown != *stateSwitchDown;
+	if(switchUpEdge) *stateSwitchUp = !*stateSwitchUp;
+	if(switchDownEdge) *stateSwitchDown = !*stateSwitchDown;
 }
 

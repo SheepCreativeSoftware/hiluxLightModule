@@ -28,7 +28,6 @@ void ppmServo2Interrupt();							// ISR for interrupt of servo PPM signal
 bool checkChannelStatus(uint8_t multiSwitch);		// Function to check the Status of the Channel (If signal is lost)
 uint8_t getChannel1Switch(uint8_t fallbackValue);	// Function to get the value of the Switches from Channel 1
 uint8_t getChannel2Switch(uint8_t fallbackValue);	// Function to get the value of the Switches from Channel 2
-uint8_t getCurrentLayer(uint8_t channelPosition);
 void mapSwitchToState(uint8_t layer, uint8_t channelValue, bool* stateSwitchUp, bool* stateSwitchDown);
 
 #endif

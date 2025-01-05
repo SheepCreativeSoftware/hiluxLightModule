@@ -21,31 +21,9 @@
 #define SOFT_PWM_HIGH 255
 #define SOFT_PWM_LOW 0
 
-bool directlyToOutput(bool lightState);
-bool highBeamFlash(bool lightState, bool lightFlashState, uint16_t flashFrequency);
 void setFlasherLight(bool leftFlasherState, bool rightFlasherState, bool hazardState, bool* outLeftLight, bool* outRightLight, uint16_t flashFrequency);
 void initLightOutput();
 void setupLightOutput(uint8_t pin, uint16_t fadeOnTime, uint16_t fadeOffTime);
 void setBooleanLight(uint8_t pin, bool state, uint8_t highValue = SOFT_PWM_HIGH);
-
-void setCombinedHeadlightAll(uint8_t pin,
-							uint8_t parkingState,
-							uint8_t lowBeamState,
-							uint8_t highBeamState,
-							uint8_t parkingOutValue,
-							uint8_t lowBeamOutValue,
-							uint8_t highBeamOutValue);
-void setCombinedHeadlightHighOnly(uint8_t pin,
-							uint8_t lowBeamState,
-							uint8_t highBeamState,
-							uint8_t lowBeamOutValue,
-							uint8_t highBeamOutValue);
-
-void setCombinedHeadlightParkOnly(uint8_t pin,
-							uint8_t parkingState,
-							uint8_t lowBeamState,
-							uint8_t parkingOutValue,
-							uint8_t lowBeamOutValue);
-uint8_t starterDimming(bool active, uint8_t defaultDimValue, uint8_t divisor, uint8_t multiplier1);
 
 #endif

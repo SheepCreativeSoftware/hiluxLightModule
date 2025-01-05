@@ -42,15 +42,4 @@ class Blink {
 		void resetBlink(); // Reset Blink after usage for next usage
 };
 
-/*
-class outputDefine {
-		unsigned int outPinModus;
-    public:
-		
-		void outputMode(int outPin, unsigned char modus);
-		void outputMode(int outPin, unsigned char modus, int fadeUpTime, int fadeDownTime);		
-};
-//Modus pwmHW softPWM softFade digital
-*/
-
 #endif

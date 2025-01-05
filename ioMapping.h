@@ -19,20 +19,13 @@
 /************************************
  * Definition IO Pins
  ************************************/
-// TODO: setup correct pins
 //Pinout Arduino Micro:
 //HW Serial 0+1 | I2C 2+3 | PWM 3, 5, 6, 9, 10, 11, 13 | LED 13
 //Servo Lib deactivates PWM functionality on pins 9 and 10
 
 //Inputs
-#define inFunction1ControlPPM 2            //PPM Signal from Remote Control Extension | Interrupt Needed
-#define inFunction2ControlPPM 3            //PPM Signal from Remote Control Extension | Interrupt Needed
-#define inSoundPPM 7               			//Soundmodul Servo Signal from Receiver  | Interrupt Needed
-// Pin 0+1+4 reserved for RS485!
-//Pinbelegung
 #define inChannel1PPM 0
 #define inChannel2PPM 1
-
 
 //Outputs
 #define outStatusLed 13					//Arduino status LED output Pin
@@ -41,7 +34,7 @@
 #define outLightFront 6
 #define outFlasherLeft 7
 #define outFlasherRight 8
-#define outAuxLight 9     //Pin 9 und 10 ohne PWM wenn Servo attached
+#define outAuxLight 9     //Pin 9 + 10 without PWM in case a Servo is attached
 #define outPositionLightFront 11 
 //Free IOs 18, 19
 

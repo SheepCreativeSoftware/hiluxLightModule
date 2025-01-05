@@ -1,6 +1,6 @@
 /************************************ 
- * hiluxLightModule v2.0.0
- * Date: 05.01.2025 | 20:34
+ * hiluxLightModule v2.0.1
+ * Date: 05.01.2025 | 23:14
  * <Hilux Light Module>
  * Copyright (C) 2025 Marina Egner <hello@sheepcs.de>
  *
@@ -71,6 +71,10 @@ void setup() {
 	* Setup Functions
 	************************************/
 	initInterrupts(inChannel1PPM, inChannel2PPM);
+
+  #if DEBUGLEVEL >= 2
+    SerialUSB.begin(9600);
+  #endif
 }
 
 #define LAYER1 1
@@ -82,17 +86,25 @@ void loop() { // put your main code here, to run repeatedly:
 	channelValue[LAYER1] = getChannel1Switch(DIRECTION_MID);
 	channelValue[LAYER2] = getChannel2Switch(DIRECTION_MID);
 
+  #if DEBUGLEVEL == 2
+  SerialUSB.print("Channel 1: ");
+  SerialUSB.println(channelValue[LAYER1]);
+  SerialUSB.print("Channel 2: ");
+  SerialUSB.println(channelValue[LAYER2]);
+  #endif
+
 	mapSwitchToState(LAYER1, channelValue[LAYER1], &highBeamState, &channel1StateDown);
 	mapSwitchToState(LAYER2, channelValue[LAYER2], &auxLightState, &hazardState);
 
-	// Separate channel evaluation because of different edge evaluation
-	boolean channel1DownDirection;
-	if(channelValue[LAYER1] == DIRECTION_DOWN) {
-		channel1DownDirection = 1;
-	} else{
-		channel1DownDirection = 0;
-	}
-	if((channel1DownDirection == 1) && (lastChannel1DownState == 0)){
+  #if DEBUGLEVEL == 2
+  SerialUSB.print("highBeamState: ");
+  SerialUSB.println(highBeamState);
+  SerialUSB.print("auxLightState: ");
+  SerialUSB.println(auxLightState);
+  #endif
+
+	// Edge shifts through modes
+	if((channel1StateDown == 1) && (lastChannel1DownState == 0)){
 		if((parkingLightState == true) && (lowBeamState == true)) {
 			parkingLightState = !parkingLightState;
 			lowBeamState = !lowBeamState;
@@ -105,9 +117,9 @@ void loop() { // put your main code here, to run repeatedly:
 			setBooleanLight(outParkingLight, HIGH, PARKING_DIMM);
 			setBooleanLight(outPositionLightFront, HIGH, PARKING_DIMM);
 		}
-		lastChannel1DownState = channel1DownDirection;
+		lastChannel1DownState = channel1StateDown;
 	} else {
-		lastChannel1DownState = channel1DownDirection;
+		lastChannel1DownState = channel1StateDown;
 	}
 
 	// Set Light on front depending on different states

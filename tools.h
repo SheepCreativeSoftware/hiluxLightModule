@@ -27,6 +27,15 @@ class EdgeEvaluation {
 		bool readEdge(bool input);
 };
 
+class DebounceEvaluation {
+		bool lastState;
+    bool lastInputState = LOW;
+		uint32_t lastDebounceTime;
+		uint32_t debounceDelay = 50;
+	public:
+		bool readDebounced(bool input);
+};
+
 class Filter {
 		int16_t lastValue;
 		bool doneFilter;

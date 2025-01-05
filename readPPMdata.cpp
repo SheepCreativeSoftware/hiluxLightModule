@@ -39,10 +39,6 @@ struct Channel {
 
 Channel interrupt[2];
 
-// Classes
-EdgeEvaluation edgeEval[2];									// Filter Function for Potis
-
-
 /***************************************************
  * PPM Signal have a range from 1000ms to 2000ms
  * So 3 stages should be 1000/1500/2000 => UP/MID/DOWN
@@ -91,18 +87,15 @@ uint8_t getChannel2Switch(uint8_t fallbackValue) {
 	return ppmToSwitchStages(interrupt[CHANNEL2].servoValue);
 }
 
-EdgeEvaluation edgeEval2[8];
+DebounceEvaluation debouncedEval[8];
+EdgeEvaluation edgeEval[8];
 void mapSwitchToState(uint8_t layer, uint8_t channelValue, bool* stateSwitchUp, bool* stateSwitchDown) {
-	bool switchUpPosition = false;
-	bool switchDownPosition = false;
-	if(channelValue == DIRECTION_UP) switchUpPosition = true;
-	if(channelValue == DIRECTION_DOWN) switchDownPosition = true;
-
+  
 	uint8_t secondLayer = layer + MAX_LAYER;
-	bool switchUpEdge = edgeEval2[layer].readEdge(switchUpPosition);
-	bool switchDownEdge = edgeEval2[secondLayer].readEdge(switchDownPosition);
+	bool switchUpDebounced = debouncedEval[layer].readDebounced(channelValue == DIRECTION_UP);
+	bool switchDownDebounced = debouncedEval[secondLayer].readDebounced(channelValue == DIRECTION_DOWN);
 
-	if(switchUpEdge) *stateSwitchUp = !*stateSwitchUp;
-	if(switchDownEdge) *stateSwitchDown = !*stateSwitchDown;
+	if(edgeEval[layer].readEdge(switchUpDebounced)) *stateSwitchUp = !*stateSwitchUp;
+	if(edgeEval[secondLayer].readEdge(switchDownDebounced)) *stateSwitchDown = !*stateSwitchDown;
 }
 

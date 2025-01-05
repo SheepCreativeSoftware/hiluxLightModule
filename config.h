@@ -23,5 +23,6 @@
 #define LIGHT_FADE_OFF_TIME 200				// 200ms Fade off time for the Light
 #define PARKING_DIMM 100					// 0-255 Value for dimming the parking light
 #define NORMAL_LIGHT_DIMMING 255			// 0-255 Value for all light when active
+#define DEBUGLEVEL 0
 
 #endif

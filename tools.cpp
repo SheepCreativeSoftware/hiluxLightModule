@@ -26,6 +26,22 @@ bool EdgeEvaluation::readEdge(bool input){
 	return false;
 }
 
+bool DebounceEvaluation::readDebounced(bool input){
+  uint32_t currentMillis = millis();
+
+	if(input != lastInputState) {
+		lastDebounceTime = currentMillis;
+	}
+
+  if((currentMillis - lastDebounceTime) > debounceDelay) {
+    if(input != lastState) lastState = input;
+  }
+
+  lastInputState = input;
+
+	return lastState;
+}
+
 int16_t Filter::filterValue(int16_t input, int16_t filterFactor, uint16_t filterTime){
 	if((millis()%filterTime >= filterTime/2) && (doneFilter == false)) {
 		lastValue = (input - lastValue) / filterFactor + lastValue; 

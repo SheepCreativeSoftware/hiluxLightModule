@@ -1,0 +1,22 @@
+# Arduino compiled files
+*.elf
+*.hex
+*.bin
+
+# Arduino libraries
+libraries/
+
+# Arduino build folder
+build/
+
+# Arduino sketchbook preferences
+*.sketchbook
+
+# Arduino IDE workspace
+*.workspace
+
+# MacOS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db
